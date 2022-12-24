@@ -4,6 +4,125 @@ class Node:
     self.next = None
 
 
+# a -> b -> c -> d -> e -> f
+# a -> b -> d -> e -> f
+# h -> i -> j -> i
+# h -> j -> i
+
+def remove_node(head, target_val):
+  # if node is at the beginning
+  if head.val == target_val:
+    return head.next
+
+  # if we recurse to the end
+  if head is None:
+    return None
+
+
+  if head.next.val == target_val:
+    head.next = head.next.next
+    return head
+
+  temp = head
+  remove_node(head.next, target_val)
+  # return head
+  return temp
+
+
+
+# remove_node(h, 'i')
+# if i == 'i': return head
+
+# remove_node(a, 'c')
+# return remove_node(b, 'c') = b
+
+# remove_node(b, 'c')
+# c.val = c == 'c'
+# return b
+
+
+# None -> 3 -> 3 -> 7 -> 7 -> 7 -> 5
+#                           prev curr
+# current_streak = 1
+# max_streak = 3
+
+def longest_streak(head):
+  # initialize variables
+  prev = None
+  max_streak = 0
+  current_streak = 0
+
+  def longesthelper(current):
+
+    nonlocal prev
+    nonlocal max_streak
+    nonlocal current_streak
+
+    if current is None:
+      return None
+
+    # if prev is NONE
+    if prev is None or current.val == prev.val:
+      current_streak += 1
+    else:
+      current_streak = 1
+
+    # update max_streak
+    if max_streak < current_streak:
+      max_streak = current_streak
+
+    # iterate
+    prev = current
+    longesthelper(current.next)
+
+  longesthelper(head)
+  return max_streak
+
+def is_univalue_list(head):
+  if head.next == None:
+    return True
+
+  if head.val != head.next.val:
+    return False
+
+  return is_univalue_list(head.next)
+
+# is_univalue(7) = None:
+# 7 != 7 ? FALSE
+# is_univalue(7) = true
+
+# is_univalue(7) = true:
+# head.next = None? return true
+
+def addTwo(num1, num2):
+  num1 + num2
+
+result = addTwo(1, 2) # None
+
+def merge_lists(head_1, head_2):
+  if head_1 is None and head_2 is None:
+    return None
+
+  if head_1 is None:
+    return head_2
+
+  if head_2 is None:
+    return head_1
+
+  if head_1.val > head_2.val:
+    next_2 = head_2.next
+    head_2.next = merge_lists(head_1, next_2)
+    return head_2
+  else
+    next_1 = head_1.next
+    head_1.next = merge_lists(next_1, head_2)
+    return head_1
+
+
+
+1 -> 4 -> 9
+2 -> 3 -> 5 -> 6
+
 
 def zipper_lists(head_1, head_2):
   pass
